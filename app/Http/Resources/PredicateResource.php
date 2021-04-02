@@ -2,9 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Predicate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Predicate
+ */
 class PredicateResource extends JsonResource
 {
     /**
@@ -16,6 +20,7 @@ class PredicateResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
         ];
     }

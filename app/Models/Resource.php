@@ -26,7 +26,12 @@ class Resource extends Model
         'name',
     ];
 
-    public function statements()
+    public function subjects()
+    {
+        return $this->hasMany(Statement::class, 'object_id');
+    }
+
+    public function objects()
     {
         return $this->hasMany(Statement::class, 'subject_id');
     }

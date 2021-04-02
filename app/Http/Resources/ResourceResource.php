@@ -22,7 +22,8 @@ class ResourceResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'statements' => StatementResource::collection($this->whenLoaded('statements')),
+            'subjects' => StatementResource::collection($this->whenLoaded('subjects')),
+            'objects' => StatementResource::collection($this->whenLoaded('objects')),
         ];
     }
 }
