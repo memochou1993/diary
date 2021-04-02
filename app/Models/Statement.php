@@ -8,11 +8,15 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property int $subject_id
+ * @property int $predicate_id
+ * @property int $object_id
+ * @property int $user_id
+ * @property Carbon $start_date
+ * @property Carbon $end_date
  * @property Resource $subject
  * @property Predicate $predicate
  * @property Resource $object
- * @property Carbon $start_date
- * @property Carbon $end_date
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */

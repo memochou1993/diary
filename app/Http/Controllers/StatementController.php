@@ -2,24 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StatementRequest;
+use App\Http\Requests\StatementIndexRequest;
+use App\Http\Requests\StatementShowRequest;
+use App\Http\Requests\StatementStoreRequest;
+use App\Http\Requests\StatementUpdateRequest;
 use App\Http\Resources\StatementResource;
 use App\Models\Statement;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class StatementController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Statement::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @param User $user
+     * @param StatementIndexRequest $request
      * @return AnonymousResourceCollection
      */
-    public function index(User $user)
+    public function index(StatementIndexRequest $request)
     {
+        $user = $request->user();
+
         $data = $user->statements()->with([
             'subject',
             'object',
@@ -32,12 +40,13 @@ class StatementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StatementRequest $request
-     * @param User $user
+     * @param StatementStoreRequest $request
      * @return StatementResource
      */
-    public function store(StatementRequest $request, User $user)
+    public function store(StatementStoreRequest $request)
     {
+        $user = $request->user();
+
         $data = $user->statements()->create($request->all());
 
         return new StatementResource($data);
@@ -63,11 +72,11 @@ class StatementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param StatementRequest $request
+     * @param StatementUpdateRequest $request
      * @param Statement $statement
      * @return JsonResponse
      */
-    public function update(StatementRequest $request, Statement $statement)
+    public function update(StatementUpdateRequest $request, Statement $statement)
     {
         $statement->update($request->all());
 

@@ -11,6 +11,6 @@ Route::middleware([
 ])->group(function () {
     Route::delete('/tokens', [TokenController::class, 'destroy']);
 
-    Route::apiResource('users.statements', StatementController::class)
+    Route::apiResource('statements', StatementController::class)
         ->shallow();
 });
