@@ -2,84 +2,95 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResourceIndexRequest;
+use App\Http\Requests\ResourceShowRequest;
+use App\Http\Requests\ResourceStoreRequest;
+use App\Http\Requests\ResourceUpdateRequest;
+use App\Http\Resources\ResourceResource;
 use App\Models\Resource;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 class ResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function __construct() {
+        $this->authorizeResource(Resource::class);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param ResourceIndexRequest $request
+     * @return AnonymousResourceCollection
      */
-    public function create()
+    public function index(ResourceIndexRequest $request)
     {
-        //
+        /** @var User $user */
+        $user = $request->user();
+
+        $data = $user->resources()->get();
+
+        return ResourceResource::collection($data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ResourceStoreRequest $request
+     * @return ResourceResource
      */
-    public function store(Request $request)
+    public function store(ResourceStoreRequest $request)
     {
-        //
+        /** @var User $user */
+        $user = $request->user();
+
+        $data = $user->resources()->create($request->all());
+
+        return new ResourceResource($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
+     * @param Resource $resource
+     * @return ResourceResource
      */
     public function show(Resource $resource)
     {
-        //
-    }
+        $data = Resource::with([
+            'statements.predicate',
+            'statements.object',
+        ])->find($resource->id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource)
-    {
-        //
+        return new ResourceResource($data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
+     * @param ResourceUpdateRequest $request
+     * @param Resource $resource
+     * @return JsonResponse
      */
-    public function update(Request $request, Resource $resource)
+    public function update(ResourceUpdateRequest $request, Resource $resource)
     {
-        //
+        $resource->update($request->all());
+
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
+     * @param Resource $resource
+     * @return JsonResponse
      */
     public function destroy(Resource $resource)
     {
-        //
+        Resource::destroy($resource->id);
+
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

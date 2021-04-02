@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StatementIndexRequest;
-use App\Http\Requests\StatementShowRequest;
 use App\Http\Requests\StatementStoreRequest;
 use App\Http\Requests\StatementUpdateRequest;
 use App\Http\Resources\StatementResource;
 use App\Models\Statement;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +26,7 @@ class StatementController extends Controller
      */
     public function index(StatementIndexRequest $request)
     {
+        /** @var User $user */
         $user = $request->user();
 
         $data = $user->statements()->with([
@@ -45,6 +46,7 @@ class StatementController extends Controller
      */
     public function store(StatementStoreRequest $request)
     {
+        /** @var User $user */
         $user = $request->user();
 
         $data = $user->statements()->create($request->all());

@@ -16,7 +16,7 @@ class TokenController extends Controller
         $user = User::query()->firstWhere('email', $request->input('email'));
 
         if (!$user || !Hash::check($request->input('password'), $user->password)) {
-            return null;
+            return response()->json(null, Response::HTTP_UNAUTHORIZED);
         }
 
         return response()->json([
