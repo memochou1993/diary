@@ -33,6 +33,16 @@ class Statement extends Model
         'end_date',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
+
     public function subject()
     {
         return $this->belongsTo(Resource::class, 'subject_id');
