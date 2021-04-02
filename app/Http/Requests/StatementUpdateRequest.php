@@ -33,14 +33,6 @@ class StatementUpdateRequest extends FormRequest
             'object_id' => [
                 'required',
             ],
-            'start_date' => [
-                'required',
-                'date_format:Y-m-d',
-            ],
-            'end_date' => [
-                'required',
-                'date_format:Y-m-d',
-            ],
         ];
     }
 }

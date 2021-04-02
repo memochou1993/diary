@@ -12,8 +12,6 @@ use Illuminate\Support\Carbon;
  * @property int $predicate_id
  * @property int $object_id
  * @property int $user_id
- * @property Carbon $start_date
- * @property Carbon $end_date
  * @property Resource $subject
  * @property Predicate $predicate
  * @property Resource $object
@@ -33,18 +31,6 @@ class Statement extends Model
         'subject_id',
         'predicate_id',
         'object_id',
-        'start_date',
-        'end_date',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
     ];
 
     public function subject()

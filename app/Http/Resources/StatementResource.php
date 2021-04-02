@@ -24,8 +24,6 @@ class StatementResource extends JsonResource
             'subject' => new ResourceResource($this->whenLoaded('subject')),
             'predicate' => new ResourceResource($this->whenLoaded('predicate')),
             'object' => new ResourceResource($this->whenLoaded('object')),
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

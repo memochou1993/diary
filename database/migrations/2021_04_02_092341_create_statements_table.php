@@ -22,8 +22,6 @@ class CreateStatementsTable extends Migration
             $table->foreignIdFor(Predicate::class);
             $table->foreignIdFor(Resource::class, 'object_id');
             $table->foreignIdFor(User::class);
-            $table->dateTime('start_date')->nullable();
-            $table->dateTime('end_date')->nullable();
             $table->timestamps();
         });
     }
