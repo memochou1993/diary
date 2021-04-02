@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PredicateIndexRequest;
+use App\Http\Resources\PredicateResource;
 use App\Models\Predicate;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PredicateController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param PredicateIndexRequest $request
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(PredicateIndexRequest $request)
     {
-        //
-    }
+        /** @var User $user */
+        $user = $request->user();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = $user->predicates()->get();
+
+        return PredicateResource::collection($data);
     }
 
     /**
@@ -35,51 +35,45 @@ class PredicateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Predicate  $predicate
-     * @return \Illuminate\Http\Response
+     * @param Predicate $predicate
+     * @return PredicateResource
      */
     public function show(Predicate $predicate)
     {
-        //
-    }
+        $data = Predicate::with([
+            'subjects',
+            'objects',
+        ])->find($predicate->id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Predicate  $predicate
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Predicate $predicate)
-    {
-        //
+        return new PredicateResource($data);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Predicate  $predicate
+     * @param Predicate $predicate
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Predicate $predicate)
     {
-        //
+        // TODO
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Predicate  $predicate
+     * @param Predicate $predicate
      * @return \Illuminate\Http\Response
      */
     public function destroy(Predicate $predicate)
     {
-        //
+        // TODO
     }
 }

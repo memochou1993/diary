@@ -22,6 +22,8 @@ class PredicateResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'subjects' => ResourceResource::collection($this->whenLoaded('subjects')),
+            'objects' => ResourceResource::collection($this->whenLoaded('objects')),
         ];
     }
 }

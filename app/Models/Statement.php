@@ -12,9 +12,6 @@ use Illuminate\Support\Carbon;
  * @property int $predicate_id
  * @property int $object_id
  * @property int $user_id
- * @property Resource $subject
- * @property Predicate $predicate
- * @property Resource $object
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */

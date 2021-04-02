@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PredicateController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\StatementController;
 use App\Http\Controllers\TokenController;
@@ -13,6 +14,8 @@ Route::middleware([
     Route::delete('/tokens', [TokenController::class, 'destroy']);
 
     Route::apiResource('resources', ResourceController::class)
+        ->shallow();
+    Route::apiResource('predicates', PredicateController::class)
         ->shallow();
     Route::apiResource('statements', StatementController::class)
         ->shallow();

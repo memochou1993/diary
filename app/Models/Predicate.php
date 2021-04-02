@@ -25,4 +25,14 @@ class Predicate extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Resource::class, 'statements', 'predicate_id', 'subject_id');
+    }
+
+    public function objects()
+    {
+        return $this->belongsToMany(Resource::class, 'statements', 'predicate_id', 'object_id');
+    }
 }
