@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PredicateIndexRequest;
-use App\Http\Requests\PredicateStoreRequest;
+use App\Http\Requests\User\PredicateIndexRequest;
+use App\Http\Requests\User\PredicateStoreRequest;
 use App\Http\Resources\PredicateResource;
 use App\Models\Predicate;
 use App\Models\User;

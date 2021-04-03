@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StatementIndexRequest;
-use App\Http\Requests\StatementStoreRequest;
-use App\Http\Requests\StatementUpdateRequest;
+use App\Http\Requests\User\StatementIndexRequest;
+use App\Http\Requests\User\StatementStoreRequest;
+use App\Http\Requests\User\StatementUpdateRequest;
 use App\Http\Resources\StatementResource;
 use App\Models\Statement;
 use App\Models\User;

@@ -1,33 +1,25 @@
 <?php
 
-use App\Http\Controllers\PublicResourceController;
-use App\Http\Controllers\Auth\PredicateController;
-use App\Http\Controllers\Auth\ResourceController;
-use App\Http\Controllers\Auth\StatementController;
-use App\Http\Controllers\Auth\TokenController;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\User\PredicateController as UserPredicateController;
+use App\Http\Controllers\User\ResourceController as UserResourceController;
+use App\Http\Controllers\User\StatementController as UserStatementController;
+use App\Http\Controllers\User\TokenController as UserTokenController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/tokens', [TokenController::class, 'store']);
+Route::post('/tokens', [UserTokenController::class, 'store']);
+Route::delete('/tokens', [UserTokenController::class, 'destroy'])->middleware('auth:sanctum');
 
-Route::apiResource('resources', PublicResourceController::class)
+Route::apiResource('resources', ResourceController::class)
     ->only('index', 'show');
 
 Route::middleware([
     'auth:sanctum',
-])->group(function () {
-    Route::apiResource('users.resources', ResourceController::class)
-        ->only('index');
-});
-
-Route::middleware([
-    'auth:sanctum',
 ])->prefix('user')->group(function () {
-    Route::delete('/tokens', [TokenController::class, 'destroy']);
-
-    Route::apiResource('resources', ResourceController::class)
+    Route::apiResource('resources', UserResourceController::class)
         ->shallow();
-    Route::apiResource('predicates', PredicateController::class)
+    Route::apiResource('predicates', UserPredicateController::class)
         ->shallow();
-    Route::apiResource('statements', StatementController::class)
+    Route::apiResource('statements', UserStatementController::class)
         ->shallow();
 });

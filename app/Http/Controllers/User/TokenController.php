@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TokenRequest;
+use App\Http\Requests\User\TokenStoreRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TokenController extends Controller
 {
-    public function store(TokenRequest $request)
+    public function store(TokenStoreRequest $request)
     {
         /** @var User $user */
         $user = User::query()->firstWhere('email', $request->input('email'));

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StatementUpdateRequest extends FormRequest
+class PredicateStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,7 @@ class StatementUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'subject_id' => [
-                'required',
-            ],
-            'predicate_id' => [
-                'required',
-            ],
-            'object_id' => [
+            'name' => [
                 'required',
             ],
         ];

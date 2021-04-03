@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResourceIndexRequest;
-use App\Http\Requests\ResourceStoreRequest;
-use App\Http\Requests\ResourceUpdateRequest;
+use App\Http\Requests\User\ResourceStoreRequest;
+use App\Http\Requests\User\ResourceUpdateRequest;
 use App\Http\Resources\ResourceResource;
 use App\Models\Resource;
 use App\Models\User;

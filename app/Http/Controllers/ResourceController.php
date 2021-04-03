@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PublicResourceIndexRequest;
-use App\Http\Requests\PublicResourceShowRequest;
+use App\Http\Requests\ResourceIndexRequest;
+use App\Http\Requests\ResourceShowRequest;
 use App\Http\Resources\ResourceResource;
 use App\Models\Resource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class PublicResourceController extends Controller
+class ResourceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param PublicResourceIndexRequest $request
+     * @param ResourceIndexRequest $request
      * @return AnonymousResourceCollection
      */
-    public function index(PublicResourceIndexRequest $request)
+    public function index(ResourceIndexRequest $request)
     {
         $data = Resource::with([
             'user',
@@ -40,11 +40,11 @@ class PublicResourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param PublicResourceShowRequest $request
+     * @param ResourceShowRequest $request
      * @param Resource $resource
      * @return ResourceResource
      */
-    public function show(PublicResourceShowRequest $request, Resource $resource)
+    public function show(ResourceShowRequest $request, Resource $resource)
     {
         $data = Resource::with([
             'subjectStatements.predicate',
