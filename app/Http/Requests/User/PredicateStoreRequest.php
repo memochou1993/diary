@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PredicateStoreRequest extends FormRequest
 {
@@ -26,6 +27,8 @@ class PredicateStoreRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                Rule::unique('predicates', 'name')
+                    ->where('user_id', $this->user()->id),
             ],
         ];
     }

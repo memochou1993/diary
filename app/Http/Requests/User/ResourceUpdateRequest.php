@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\User;
 
+use App\Models\Resource;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ResourceUpdateRequest extends FormRequest
 {
@@ -26,6 +28,9 @@ class ResourceUpdateRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                Rule::unique('resources', 'name')
+                    ->where('user_id', $this->user()->id)
+                    ->ignore($this->route('resource')),
             ],
         ];
     }

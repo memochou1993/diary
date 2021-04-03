@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PredicateUpdateRequest extends FormRequest
 {
@@ -26,6 +27,9 @@ class PredicateUpdateRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                Rule::unique('predicates', 'name')
+                    ->where('user_id', $this->user()->id)
+                    ->ignore($this->route('predicate')),
             ],
         ];
     }

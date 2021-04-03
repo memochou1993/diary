@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ResourceStoreRequest extends FormRequest
 {
@@ -26,6 +27,8 @@ class ResourceStoreRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                Rule::unique('resources', 'name')
+                    ->where('user_id', $this->user()->id),
             ],
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\PredicateIndexRequest;
 use App\Http\Requests\User\PredicateStoreRequest;
+use App\Http\Requests\User\PredicateUpdateRequest;
 use App\Http\Resources\PredicateResource;
 use App\Models\Predicate;
 use App\Models\User;
@@ -72,11 +73,11 @@ class PredicateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param PredicateStoreRequest $request
+     * @param PredicateUpdateRequest $request
      * @param Predicate $predicate
      * @return JsonResponse
      */
-    public function update(PredicateStoreRequest $request, Predicate $predicate)
+    public function update(PredicateUpdateRequest $request, Predicate $predicate)
     {
         $predicate->update($request->all());
 
