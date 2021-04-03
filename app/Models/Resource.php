@@ -26,6 +26,11 @@ class Resource extends Model
         'name',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function subjectStatements()
     {
         return $this->hasMany(Statement::class, 'object_id');

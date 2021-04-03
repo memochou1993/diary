@@ -19,6 +19,7 @@ class PublicResourceController extends Controller
     public function index(PublicResourceIndexRequest $request)
     {
         $data = Resource::with([
+            'user',
             'subjectStatements.predicate',
             'subjectStatements.subject',
             'objectStatements.object',
@@ -27,6 +28,10 @@ class PublicResourceController extends Controller
             return $query->where('name', 'is');
         })->whereHas('objectStatements.object', function ($query) {
             return $query->where('name', 'public');
+        })->when($request->input('user_name'), function ($query, $user_name) {
+            $query->whereHas('user', function ($query) use ($user_name) {
+                return $query->where('name', $user_name);
+            });
         })->get();
 
         return ResourceResource::collection($data);

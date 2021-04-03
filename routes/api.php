@@ -1,16 +1,23 @@
 <?php
 
 use App\Http\Controllers\PublicResourceController;
-use App\Http\Controllers\User\PredicateController;
-use App\Http\Controllers\User\ResourceController;
-use App\Http\Controllers\User\StatementController;
-use App\Http\Controllers\User\TokenController;
+use App\Http\Controllers\Auth\PredicateController;
+use App\Http\Controllers\Auth\ResourceController;
+use App\Http\Controllers\Auth\StatementController;
+use App\Http\Controllers\Auth\TokenController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/tokens', [TokenController::class, 'store']);
 
 Route::apiResource('resources', PublicResourceController::class)
     ->only('index', 'show');
+
+Route::middleware([
+    'auth:sanctum',
+])->group(function () {
+    Route::apiResource('users.resources', ResourceController::class)
+        ->only('index');
+});
 
 Route::middleware([
     'auth:sanctum',

@@ -2,14 +2,14 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Resource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Resource
+ * @mixin User
  */
-class ResourceResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,9 +22,7 @@ class ResourceResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'user' => new UserResource($this->whenLoaded('user')),
-            'subject_statements' => StatementResource::collection($this->whenLoaded('subjectStatements')),
-            'object_statements' => StatementResource::collection($this->whenLoaded('objectStatements')),
+            'email' => $this->email,
         ];
     }
 }
