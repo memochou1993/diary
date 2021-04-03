@@ -3,14 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PredicateIndexRequest;
+use App\Http\Requests\PredicateStoreRequest;
 use App\Http\Resources\PredicateResource;
 use App\Models\Predicate;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 class PredicateController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     */
+    public function __construct() {
+        $this->authorizeResource(Predicate::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,12 +39,17 @@ class PredicateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PredicateStoreRequest $request
+     * @return PredicateResource
      */
-    public function store(Request $request)
+    public function store(PredicateStoreRequest $request)
     {
-        // TODO
+        /** @var User $user */
+        $user = $request->user();
+
+        $data = $user->predicates()->create($request->all());
+
+        return new PredicateResource($data);
     }
 
     /**
@@ -57,23 +71,27 @@ class PredicateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param PredicateStoreRequest $request
      * @param Predicate $predicate
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function update(Request $request, Predicate $predicate)
+    public function update(PredicateStoreRequest $request, Predicate $predicate)
     {
-        // TODO
+        $predicate->update($request->all());
+
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Predicate $predicate
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function destroy(Predicate $predicate)
     {
-        // TODO
+        Predicate::destroy($predicate->id);
+
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

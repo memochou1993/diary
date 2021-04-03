@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StatementController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     */
     public function __construct() {
         $this->authorizeResource(Statement::class);
     }

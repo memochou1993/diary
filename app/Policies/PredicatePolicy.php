@@ -18,7 +18,7 @@ class PredicatePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class PredicatePolicy
      */
     public function view(User $user, Predicate $predicate)
     {
-        //
+        return $user->id === $predicate->user_id;
     }
 
     /**
@@ -41,7 +41,7 @@ class PredicatePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class PredicatePolicy
      */
     public function update(User $user, Predicate $predicate)
     {
-        //
+        return $user->id === $predicate->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class PredicatePolicy
      */
     public function delete(User $user, Predicate $predicate)
     {
-        //
+        return $user->id === $predicate->user_id;
     }
 
     /**

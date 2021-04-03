@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResourceController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     */
     public function __construct() {
         $this->authorizeResource(Resource::class);
     }
