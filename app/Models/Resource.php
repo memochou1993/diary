@@ -44,8 +44,8 @@ class Resource extends Model
     public function isPublic()
     {
         return $this->objectStatements()->get()->some(function ($statement) {
-            return $statement->predicate->name === 'is'
-                && $statement->object->name === 'public';
+            return $statement->predicate->name === 'meta:is'
+                && $statement->object->name === 'meta:public';
         });
     }
 }

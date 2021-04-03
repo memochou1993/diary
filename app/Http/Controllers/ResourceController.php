@@ -25,9 +25,11 @@ class ResourceController extends Controller
             'objectStatements.object',
             'objectStatements.predicate',
         ])->whereHas('objectStatements.predicate', function ($query) {
-            return $query->where('name', 'is');
+            return $query->where('name', 'meta:is');
         })->whereHas('objectStatements.object', function ($query) {
-            return $query->where('name', 'public');
+            return $query->where('name', 'meta:public');
+        })->when($request->input('name'), function ($query, $name) {
+            $query->where('name', $name);
         })->when($request->input('user_name'), function ($query, $user_name) {
             $query->whereHas('user', function ($query) use ($user_name) {
                 return $query->where('name', $user_name);
