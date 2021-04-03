@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PublicResourceIndexRequest;
 use App\Http\Requests\PublicResourceShowRequest;
-use App\Http\Requests\ResourceIndexRequest;
 use App\Http\Resources\ResourceResource;
 use App\Models\Resource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -13,10 +13,10 @@ class PublicResourceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param ResourceIndexRequest $request
+     * @param PublicResourceIndexRequest $request
      * @return AnonymousResourceCollection
      */
-    public function index(ResourceIndexRequest $request)
+    public function index(PublicResourceIndexRequest $request)
     {
         $data = Resource::with([
             'subjectStatements.predicate',
