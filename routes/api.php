@@ -1,16 +1,20 @@
 <?php
 
-use App\Http\Controllers\PredicateController;
-use App\Http\Controllers\ResourceController;
-use App\Http\Controllers\StatementController;
-use App\Http\Controllers\TokenController;
+use App\Http\Controllers\PublicResourceController;
+use App\Http\Controllers\User\PredicateController;
+use App\Http\Controllers\User\ResourceController;
+use App\Http\Controllers\User\StatementController;
+use App\Http\Controllers\User\TokenController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/tokens', [TokenController::class, 'store']);
 
+Route::apiResource('resources', PublicResourceController::class)
+    ->only('index', 'show');
+
 Route::middleware([
     'auth:sanctum',
-])->group(function () {
+])->prefix('user')->group(function () {
     Route::delete('/tokens', [TokenController::class, 'destroy']);
 
     Route::apiResource('resources', ResourceController::class)

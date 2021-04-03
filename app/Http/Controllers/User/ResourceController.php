@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ResourceIndexRequest;
 use App\Http\Requests\ResourceStoreRequest;
 use App\Http\Requests\ResourceUpdateRequest;
@@ -62,10 +63,10 @@ class ResourceController extends Controller
     public function show(Resource $resource)
     {
         $data = Resource::with([
-            'subjects.predicate',
-            'subjects.subject',
-            'objects.object',
-            'objects.predicate',
+            'subjectStatements.predicate',
+            'subjectStatements.subject',
+            'objectStatements.object',
+            'objectStatements.predicate',
         ])->find($resource->id);
 
         return new ResourceResource($data);

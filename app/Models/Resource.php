@@ -26,13 +26,21 @@ class Resource extends Model
         'name',
     ];
 
-    public function subjects()
+    public function subjectStatements()
     {
         return $this->hasMany(Statement::class, 'object_id');
     }
 
-    public function objects()
+    public function objectStatements()
     {
         return $this->hasMany(Statement::class, 'subject_id');
+    }
+
+    public function isPublic()
+    {
+        return $this->objectStatements()->get()->some(function ($statement) {
+            return $statement->predicate->name === 'is'
+                && $statement->object->name === 'public';
+        });
     }
 }
