@@ -65,7 +65,7 @@ class ResourcePolicy
      */
     public function delete(User $user, Resource $resource)
     {
-        return $user->id === $resource->user_id;
+        return $user->id === $resource->user_id && ! $resource->isProtected();
     }
 
     /**

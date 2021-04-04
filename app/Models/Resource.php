@@ -41,11 +41,19 @@ class Resource extends Model
         return $this->hasMany(Statement::class, 'subject_id');
     }
 
+    public function isProtected()
+    {
+        return $this->objectStatements()->get()->some(function ($statement) {
+            return $statement->predicate->name === '@is'
+                && $statement->object->name === '@protected';
+        });
+    }
+
     public function isPublic()
     {
         return $this->objectStatements()->get()->some(function ($statement) {
-            return $statement->predicate->name === 'meta:is'
-                && $statement->object->name === 'meta:public';
+            return $statement->predicate->name === '@is'
+                && $statement->object->name === '@public';
         });
     }
 }

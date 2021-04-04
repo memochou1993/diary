@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->morphMany(Token::class, 'model');
     }
+
+    public function resource()
+    {
+        return $this->belongsTo(Resource::class);
+    }
 }

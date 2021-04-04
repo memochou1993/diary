@@ -17,57 +17,72 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /** @var User $admin */
+        $admin = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@email.com',
+        ]);
+
+        /** @var Predicate $is */
+        $is = $admin->predicates()->save(Predicate::factory()->make([
+            'name' => '@is',
+        ]));
+
+        /** @var Resource $root */
+        $root = $admin->resources()->save(Resource::factory()->make([
+            'name' => '@root',
+        ]));
+
+        /** @var Resource $protected */
+        $protected = $admin->resources()->save(Resource::factory()->make([
+            'name' => '@protected',
+        ]));
+
         /** @var User $user */
         $user = User::factory()->create();
 
-        /** @var Resource $subject */
-        $subject = Resource::factory()->make([
+        /** @var Resource $i */
+        $i = Resource::factory()->make([
             'name' => '我',
         ]);
-        $user->resources()->save($subject);
+        $user->resources()->save($i);
 
-        /** @var Predicate $predicate */
-        $predicate = Predicate::factory()->make([
-            'name' => '養了',
+        /** @var Predicate $have */
+        $have = Predicate::factory()->make([
+            'name' => '有',
         ]);
-        $user->predicates()->save($predicate);
+        $user->predicates()->save($have);
 
-        /** @var Resource $object */
-        $object = Resource::factory()->make([
-            'name' => '狗',
+        /** @var Resource $note */
+        $note = Resource::factory()->make([
+            'name' => '日記',
         ]);
-        $user->resources()->save($object);
+        $user->resources()->save($note);
 
+        /** @var Statement $statement */
         $statement = Statement::factory()->make([
-            'subject_id' => $subject->id,
-            'object_id' => $object->id,
-            'predicate_id' => $predicate->id,
+            'subject_id' => $i->id,
+            'predicate_id' => $is->id,
+            'object_id' => $root->id,
         ]);
         $user->statements()->save($statement);
 
-        /** @var Resource $subject */
-        $subject = Resource::factory()->make([
-            'name' => '他',
-        ]);
-        $user->resources()->save($subject);
-
-        /** @var Predicate $predicate */
-        $predicate = Predicate::factory()->make([
-            'name' => '買了',
-        ]);
-        $user->predicates()->save($predicate);
-
-        /** @var Resource $object */
-        $object = Resource::factory()->make([
-            'name' => '電腦',
-        ]);
-        $user->resources()->save($object);
-
+        /** @var Statement $statement */
         $statement = Statement::factory()->make([
-            'subject_id' => $subject->id,
-            'object_id' => $object->id,
-            'predicate_id' => $predicate->id,
+            'subject_id' => $i->id,
+            'predicate_id' => $is->id,
+            'object_id' => $protected->id,
         ]);
         $user->statements()->save($statement);
+
+        /** @var Statement $statement */
+        $statement = Statement::factory()->make([
+            'subject_id' => $i->id,
+            'predicate_id' => $have->id,
+            'object_id' => $note->id,
+        ]);
+        $user->statements()->save($statement);
+
+        $user->resource()->associate($i)->save();
     }
 }
