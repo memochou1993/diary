@@ -18,10 +18,10 @@ class CreateStatementsTable extends Migration
     {
         Schema::create('statements', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Resource::class, 'subject_id');
-            $table->foreignIdFor(Predicate::class);
-            $table->foreignIdFor(Resource::class, 'object_id');
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Resource::class, 'subject_id')->constrained('resources')->cascadeOnDelete();
+            $table->foreignIdFor(Predicate::class)->constrained('predicates')->cascadeOnDelete();
+            $table->foreignIdFor(Resource::class, 'object_id')->constrained('resources')->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
